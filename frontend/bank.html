@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Bank | Customer Bank Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Toast Notification Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Protected Navbar Header -->
+    <header class="navbar-header">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                <span class="brand-name">Trust <span class="brand-highlight">Bank</span></span>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="bank-entry.html" class="nav-link active">Bank Management</a>
+                <a href="password.html" class="nav-link">Password Generator</a>
+            </nav>
+
+            <div class="nav-actions">
+                <span class="user-greeting" id="nav-user-greeting">Welcome, Customer</span>
+                <button class="btn btn-danger btn-sm" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-body">
+        <div class="container section-padding">
+            
+            <!-- Dashboard Top Welcome Banner -->
+            <div class="dashboard-banner">
+                <div class="welcome-text">
+                    <h1 id="dash-welcome">Welcome, Customer Name</h1>
+                    <p>Trust Bank Customer Dashboard · Status: <span class="account-status-badge" id="dash-status">Loading</span></p>
+                </div>
+                <div class="dash-quick-buttons">
+                    <a href="index.html" class="btn btn-outline-light btn-sm">Back to Home</a>
+                    <button class="btn btn-danger-light btn-sm" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+
+            <div id="account-status-notice" class="status-notice hidden" role="status"></div>
+
+            <!-- Account Details Grid -->
+            <div class="dashboard-grid">
+                <!-- Account Information Card -->
+                <div class="dash-card card-primary">
+                    <div class="dash-card-header">
+                        <h3>Account Overview</h3>
+                        <span class="account-type-badge" id="dash-account-type">Savings</span>
+                    </div>
+
+                    <div class="balance-display">
+                        <span class="balance-label">Current Balance</span>
+                        <div class="balance-amount" id="dash-balance">₹10,000.00</div>
+                    </div>
+
+                    <div class="dash-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Account Number</span>
+                            <span class="detail-value font-mono" id="dash-account-number">AC1000000000</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Account Status</span>
+                            <span class="detail-value" id="dash-status-detail">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency</span>
+                            <span class="detail-value">INR (₹) / USD ($)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Information Card -->
+                <div class="dash-card">
+                    <div class="dash-card-header">
+                        <h3>Customer Information</h3>
+                        <button class="btn btn-link btn-sm" onclick="showUpdateModal()">Edit Profile</button>
+                    </div>
+
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="info-label">Full Name</span>
+                            <span class="info-val" id="dash-fullname">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Username</span>
+                            <span class="info-val" id="dash-username">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Email Address</span>
+                            <span class="info-val" id="dash-email">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Phone Number</span>
+                            <span class="info-val" id="dash-phone">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Date of Birth</span>
+                            <span class="info-val" id="dash-dob">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Residential Address</span>
+                            <span class="info-val" id="dash-address">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Member Since</span>
+                            <span class="info-val" id="dash-created-at">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Toolbar -->
+            <div class="quick-actions-bar">
+                <h3>Account Actions</h3>
+                <div class="actions-group">
+                    <button class="btn btn-primary" onclick="showUpdateModal()">
+                        ✏️ Update Profile
+                    </button>
+                    <button class="btn btn-secondary" onclick="showPasswordModal()">Change Password</button>
+                    <a href="password.html" class="btn btn-secondary">
+                        🔐 Password Generator
+                    </a>
+                    <a href="index.html" class="btn btn-outline">
+                        Back to Home
+                    </a>
+                    <button class="btn btn-danger-outline" onclick="showDeleteConfirmationModal()">
+                        🗑️ Delete Account
+                    </button>
+                    <button class="btn btn-danger" onclick="handleLogout()">
+                        🚪 Logout
+                    </button>
+                </div>
+            </div>
+
+            <section class="transaction-workspace" aria-label="Banking operations">
+                <article class="dash-card transaction-form-card">
+                    <h3>Deposit</h3>
+                    <form id="deposit-form" class="form-stack" onsubmit="submitBankTransaction(event, 'deposit')">
+                        <div class="form-group"><label for="deposit-amount">Amount</label><input id="deposit-amount" type="number" min="0.01" step="0.01" required></div>
+                        <div class="form-group"><label for="deposit-description">Description</label><input id="deposit-description" maxlength="500"></div>
+                        <button class="btn btn-primary" type="submit">Deposit</button>
+                    </form>
+                </article>
+                <article class="dash-card transaction-form-card">
+                    <h3>Withdraw</h3>
+                    <form id="withdraw-form" class="form-stack" onsubmit="submitBankTransaction(event, 'withdraw')">
+                        <div class="form-group"><label for="withdraw-amount">Amount</label><input id="withdraw-amount" type="number" min="0.01" step="0.01" required></div>
+                        <div class="form-group"><label for="withdraw-description">Description</label><input id="withdraw-description" maxlength="500"></div>
+                        <button class="btn btn-primary" type="submit">Withdraw</button>
+                    </form>
+                </article>
+                <article class="dash-card transaction-form-card">
+                    <h3>Transfer Money</h3>
+                    <form id="transfer-form" class="form-stack" onsubmit="submitBankTransaction(event, 'transfer')">
+                        <div class="form-group"><label for="transfer-recipient">Recipient Account Number</label><input id="transfer-recipient" required maxlength="100"></div>
+                        <div class="form-group"><label for="transfer-amount">Amount</label><input id="transfer-amount" type="number" min="0.01" step="0.01" required></div>
+                        <div class="form-group"><label for="transfer-description">Description</label><input id="transfer-description" maxlength="500"></div>
+                        <button class="btn btn-primary" type="submit">Transfer</button>
+                    </form>
+                </article>
+            </section>
+
+            <section class="dash-card transaction-history" aria-labelledby="transaction-history-title">
+                <div class="dash-card-header history-heading">
+                    <h3 id="transaction-history-title">Transaction History</h3>
+                    <label class="history-filter">Type
+                        <select id="transaction-filter" onchange="loadCustomerTransactions()">
+                            <option value="">All transactions</option>
+                            <option value="DEPOSIT">Deposits</option>
+                            <option value="WITHDRAWAL">Withdrawals</option>
+                            <option value="TRANSFER">Transfers</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="table-scroll"><table class="data-table"><thead><tr><th>ID</th><th>Type</th><th>Amount</th><th>Before</th><th>After</th><th>Sender</th><th>Recipient</th><th>Description</th><th>Date</th><th>Status</th></tr></thead><tbody id="customer-transactions"><tr><td colspan="10">Loading transactions…</td></tr></tbody></table></div>
+            </section>
+
+            <!-- Update Profile Modal -->
+            <div id="update-modal" class="modal-backdrop hidden">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3>Update Customer Profile</h3>
+                        <button class="modal-close-btn" onclick="hideUpdateModal()">&times;</button>
+                    </div>
+                    <p class="modal-subtitle">You can update your contact information. Account Number, Balance, Username, and Password Hash cannot be modified.</p>
+                    
+                    <form id="update-profile-form" onsubmit="handleProfileUpdateSubmit(event)" class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="update-fullname">Full Name <span class="required">*</span></label>
+                            <input type="text" id="update-fullname" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="update-email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="update-email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="update-phone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="update-phone" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="update-address">Residential Address <span class="required">*</span></label>
+                            <input type="text" id="update-address" required>
+                        </div>
+
+                        <div class="form-actions span-2">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideUpdateModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delete Account Confirmation Modal -->
+            <div id="delete-modal" class="modal-backdrop hidden">
+                <div class="modal-card modal-danger-card">
+                    <div class="modal-header">
+                        <h3 class="text-danger">Confirm Account Deletion</h3>
+                        <button class="modal-close-btn" onclick="hideDeleteConfirmationModal()">&times;</button>
+                    </div>
+                    <p class="modal-body-text">
+                        Are you sure you want to delete your bank account?
+                        <br><br>
+                        <strong>This action cannot be undone.</strong> Your customer profile, balance history, and account records will be permanently removed from MySQL.
+                    </p>
+
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="hideDeleteConfirmationModal()">Cancel</button>
+                        <button class="btn btn-danger" onclick="confirmDeleteAccount()">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="password-modal" class="modal-backdrop hidden">
+                <div class="modal-card">
+                    <div class="modal-header"><h3>Change Password</h3><button class="modal-close-btn" type="button" onclick="hidePasswordModal()">&times;</button></div>
+                    <form id="change-password-form" onsubmit="handlePasswordChange(event)" class="form-stack">
+                        <div class="form-group"><label for="current-password">Current Password</label><input type="password" id="current-password" autocomplete="current-password" required></div>
+                        <div class="form-group"><label for="new-password">New Password</label><input type="password" id="new-password" autocomplete="new-password" minlength="8" required></div>
+                        <div class="form-group"><label for="confirm-new-password">Confirm New Password</label><input type="password" id="confirm-new-password" autocomplete="new-password" minlength="8" required></div>
+                        <div class="form-actions"><button class="btn btn-primary" type="submit">Save Password</button><button class="btn btn-secondary" type="button" onclick="hidePasswordModal()">Cancel</button></div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-bottom text-center">
+            <p>&copy; 2026 Trust Bank Management System. Java 21 + Spring Data JPA + MySQL 8.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="bank.js"></script>
+</body>
+</html>

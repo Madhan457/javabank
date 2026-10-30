@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Bank | Service Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Toast Notification Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Protected Header -->
+    <header class="navbar-header">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                <span class="brand-name">Trust <span class="brand-highlight">Bank</span></span>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="bank-entry.html" class="nav-link">Bank Management</a>
+                <a href="password.html" class="nav-link">Password Generator</a>
+            </nav>
+
+            <div class="nav-actions">
+                <span class="user-greeting" id="nav-user-greeting">Welcome, Customer</span>
+                <button class="btn btn-danger btn-sm" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-body">
+        <section class="home-hero">
+            <div class="container">
+                <div class="hero-header text-center">
+                    <span class="badge badge-primary-outline">Authenticated Portal</span>
+                    <h1 class="page-title">Choose a Service</h1>
+                    <p class="page-subtitle">Select an enterprise module below to proceed with your session.</p>
+                </div>
+
+                <!-- Two Major Service Cards -->
+                <div class="services-grid">
+                    <!-- Module 1: Bank Management Card -->
+                    <div class="service-card">
+                        <div class="card-icon-header icon-navy">
+                            <span class="large-emoji">🏦</span>
+                        </div>
+                        <h2 class="card-title">Bank Management</h2>
+                        <p class="card-description">
+                            View your account details, real-time balance, personal profile information, update contact records, or manage account deletion.
+                        </p>
+                        <a href="bank-entry.html" class="btn btn-primary btn-block">
+                            Open Bank &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Module 2: Smart Password Generator Card -->
+                    <div class="service-card card-highlight">
+                        <div class="card-icon-header icon-blue">
+                            <span class="large-emoji">🔐</span>
+                        </div>
+                        <h2 class="card-title">Smart Password Generator</h2>
+                        <p class="card-description">
+                            Generate secure, strong, cryptographically randomized passwords instantly using client-side Web Crypto API with live strength analysis.
+                        </p>
+                        <a href="password.html" class="btn btn-secondary btn-block">
+                            Open Password Generator &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="brand-logo">
+                    <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>Trust Bank</span>
+                </a>
+                <p>Enterprise Bank Management & Cryptographic Security Platform.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Modules</h4>
+                <a href="index.html">Home</a>
+                <a href="bank-entry.html">Bank Management</a>
+                <a href="password.html">Password Generator</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Trust Bank Management System. Java 21 & Spring Boot Application.</p>
+        </div>
+    </footer>
+
+    <!-- Shared Script -->
+    <script src="script.js"></script>
+    <script>
+        // Auth Guard check for protected page
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = checkAuthGuard();
+            if (user) {
+                document.getElementById('nav-user-greeting').textContent = `Welcome, ${user.fullName}`;
+            }
+        });
+    </script>
+</body>
+</html>
